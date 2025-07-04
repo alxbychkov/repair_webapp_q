@@ -52,7 +52,7 @@
 
 ## Временная шкала (Gantt chart)
 
-```css
+```mermaid
 gantt
     title План разработки (Полный вариант)
     dateFormat  YYYY-MM-DD
