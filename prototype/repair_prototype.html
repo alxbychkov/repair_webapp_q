@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repair Module Prototype</title>
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@3/dist/vuetify.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3/dist/vuetify.min.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>
+          <!-- Header with Telegram User Info -->
+          <v-card class="mb-4" v-if="user">
+            <v-card-title>Welcome, {{ user.first_name }}</v-card-title>
+            <v-card-text>
+              <v-img :src="user.photo_url" max-width="50" class="rounded-circle" v-if="user.photo_url"></v-img>
+            </v-card-text>
+          </v-card>
+
+          <!-- Step 1: Brand Selection -->
+          <v-card class="mb-4" v-if="step === 1">
+            <v-card-title>Select Brand</v-card-title>
+            <v-select
+              v-model="selectedBrand"
+              :items="brands"
+              item-title="name"
+              item-value="id"
+              label="Choose a brand"
+              variant="outlined"
+              :rules="[v => !!v || 'Brand is required']"
+            ></v-select>
+            <v-btn color="primary" :disabled="!selectedBrand" @click="nextStep">Next</v-btn>
+          </v-card>
+
+          <!-- Step 2: Model Selection -->
+          <v-card class="mb-4" v-if="step === 2">
+            <v-card-title>Select Model</v-card-title>
+            <v-select
+              v-model="selectedModel"
+              :items="filteredModels"
+              item-title="name"
+              item-value="id"
+              label="Choose a model"
+              variant="outlined"
+              :rules="[v => !!v || 'Model is required']"
+            ></v-select>
+            <v-text-field
+              v-model="customModel"
+              label="Or enter manually"
+              variant="outlined"
+              :rules="[v => (!selectedModel && !v) ? 'Custom model is required' : true]"
+            ></v-text-field>
+            <v-btn color="primary" :disabled="!selectedModel && !customModel" @click="nextStep">Next</v-btn>
+          </v-card>
+
+          <!-- Step 3: Issue Selection -->
+          <v-card class="mb-4" v-if="step === 3">
+            <v-card-title>Select Issue</v-card-title>
+            <v-select
+              v-model="selectedIssue"
+              :items="issues"
+              item-title="name"
+              item-value="id"
+              label="Choose an issue"
+              variant="outlined"
+              :rules="[v => !!v || 'Issue is required']"
+            ></v-select>
+            <v-text-field
+              v-model="customIssue"
+              label="Or describe the issue"
+              variant="outlined"
+            ></v-text-field>
+            <v-btn color="primary" :disabled="!selectedIssue && !customIssue" @click="nextStep">Next</v-btn>
+          </v-card>
+
+          <!-- Step 4: Photo Upload -->
+          <v-card class="mb-4" v-if="step === 4">
+            <v-card-title>Upload Photos (Optional)</v-card-title>
+            <v-file-input
+              v-model="photos"
+              label="Upload clear photos of the damage (max 3)"
+              multiple
+              accept="image/*"
+              variant="outlined"
+              :rules="[v => !v || v.length <= 3 || 'Max 3 photos allowed']"
+            ></v-file-input>
+            <v-btn color="primary" @click="nextStep">Next</v-btn>
+          </v-card>
+
+          <!-- Step 5: Confirmation -->
+          <v-card class="mb-4" v-if="step === 5">
+            < mocno="v-card-title">Confirm Request</v-card-title>
+            <v-card-text>
+              <p><strong>Brand:</strong> {{ selectedBrandName }}</p>
+              <p><strong>Model:</strong> {{ selectedModelName || customModel }}</p>
+              <p><strong>Issue:</strong> {{ selectedIssueName || customIssue }}</p>
+              <p><strong>Estimated Cost:</strong> 3000–15000 RUB</p>
+              <p><strong>Repair Time:</strong> 1–6 hours</p>
+            </v-card-text>
+            <div color="primary" @click="submitRequest" :loading="submitting" :disabled="submitting">Confirm Request</div>
+          </v-card>
+
+          <!-- Step 6: Personal Account -->
+          <v-card v-if="step === 6">
+            <v-card-title>Personal Account</v-card-title>
+            <v-card-text>
+              <v-list>
+                <v-list-item v-for="request in requests" :key="request.id">
+                  <v-list-item-title>{{ request.model }} - {{ request.issue }}</v-list-item-title>
+                  <v-list-item-subtitle>Status: {{ request.status }}</v-list-item-subtitle>
+                </v-list>
+                <v-list-item v-if="!requests.length">
+                  <v-list-item-title>No requests yet</v-list-item-title>
+                </v-list-item>
+              </v-card-text>
+              <v-btn color="primary" @click="createNewRequest">Create New Request</v-btn>
+          </v-card>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    const { createVuetify } = Vuetify;
+
+    const vuetify = createVuetify();
+    const app = createApp({
+      data() {
+        return {
+          step: 1,
+          user: null,
+          selectedBrand: null,
+          selectedModel: null,
+          customModel: '',
+          selectedIssue: null,
+          customIssue: '',
+          photos: [],
+          submitting: false,
+          requests: [], // Initialize empty to fetch from backend
+          brands: [
+            { id: 1, name: 'Apple' },
+            { id: 2, name: 'Samsung' },
+            { id: 3, name: 'Xiaomi' },
+            { id: 4, name: 'Huawei' },
+            { id: 5, name: 'Google' },
+            { id: 6, name: 'OnePlus' },
+            { id: 7, name: 'Oppo' },
+            { id: 8, name: 'Vivo' },
+            { id: 9, name: 'Sony' },
+            { id: 10, name: 'Other' }
+          ],
+          models: [
+            { id: 101, name: 'iPhone 13', brandId: 1 },
+            { id: 102, name: 'iPhone 14', brandId: 1 },
+            { id: 103, name: 'iPhone 12', brandId: 1 },
+            { id: 104, name: 'iPhone SE', brandId: 1 },
+            { id: 105, name: 'iPhone 15', brandId: 1 },
+            { id: 201, name: 'Galaxy S21', brandId: 2 },
+            { id: 202, name: 'Galaxy S22', brandId: 2 },
+            { id: 203, name: 'Galaxy A52', brandId: 2 },
+            { id: 204, name: 'Galaxy Note 20', brandId: 2 },
+            { id: 205, name: 'Galaxy Z Fold 4', brandId: 2 }
+            // ... остальные модели из JSON-каталога
+          ],
+          issues: [
+            { id: 1, name: 'Broken Screen' },
+            { id: 2,  name: 'Battery Replacement' },
+            { id: 3, name: 'Camera Issue' },
+            { id: 4, name: "Won't Turn On" },
+            { id: 5, name: 'Water Damage' },
+            { id: 6, name: 'Speaker Issue' },
+            { id: 7, name: 'Charging Port Issue' },
+            { id: 8, name: 'Software Issue' },
+            { id: 9, name: 'Button Malfunction' },
+            { id: 10, name: 'Other' }
+          ]
+        };
+      },
+      computed: {
+        selectedBrandName() {
+          const brand = this.brands.find(b => b.id === this.selectedBrand);
+          return brand ? brand.name : '';
+        },
+        selectedModelName() {
+          const model = this.models.find(m => m.id === this.selectedModel);
+          return model ? model.name : '';
+        },
+        selectedIssueName() {
+          const issue = this.issues.find(i => i.id === this.selectedIssue);
+          return issue ? issue.name : '';
+        },
+        filteredModels() {
+          return this.models.filter(m => m.brandId === this.selectedBrand);
+        }
+      },
+  methods: {
+    nextStep() {
+      if (this.step < 6) {
+        this.step++;
+        console.log('Current step:', this.step);
+      }
+    },
+    async submitRequest(event) {
+      event.preventDefault(); // Prevent page reload
+      event.stopPropagation(); // Stop event bubbling
+      console.log('Submitting request...');
+      this.submitting = true;
+      const requestData = {
+        userId: this.user?.id || 'test_user',
+        brand: this.selectedBrandName,
+        model: this.selectedModelName || this.customModel,
+        issue: this.selectedIssueName || this.customIssue,
+        photos: this.photos.map(file => file.name),
+        status: 'Created'
+      };
+      try {
+        const response = await fetch('http://localhost:3000/requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestData)
+        });
+        if (response.ok) {
+          const newRequest = await response.json();
+          this.requests.push(newRequest);
+          this.step = 6;
+          console.log('Request submitted, new requests:', this.requests);
+          window.Telegram.WebApp.showAlert('Request submitted successfully!');
+          // Reset form
+          this.selectedBrand = null;
+          this.selectedModel = null;
+          this.customModel = '';
+          this.selectedIssue = null;
+          this.customIssue = '';
+          this.photos = [];
+        } else {
+          console.error('Request failed:', response.status);
+          window.Telegram.WebApp.showAlert('Error submitting request');
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        window.Telegram.WebApp.showAlert('Network error. Please try again.');
+      } finally {
+        this.submitting = false;
+      }
+    },
+    createNewRequest() {
+      this.step = 1;
+      console.log('Creating new request, step reset to:', this.step);
+    },
+    async fetchRequests() {
+      try {
+        const response = await fetch(`http://localhost:3000/requests?userId=${this.user?.id || 'test_user'}`);
+        if (response.ok) {
+          this.requests = await response.json();
+          console.log('Fetched requests:', this.requests);
+        } else {
+          console.error('Failed to fetch requests:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching requests:', error);
+      }
+    }
+  },
+  mounted() {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    this.user = tg.initDataUnsafe.user || { id: 'test_user', first_name: 'Test User', photo_url: '' };
+    console.log('User initialized:', this.user);
+    this.fetchRequests(); // Fetch requests on mount
+  }
+});
+
+app.use(vuetify).mount('#app');
+  </script>
+</body>
+</html>

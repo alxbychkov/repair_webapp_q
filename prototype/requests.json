@@ -1,0 +1,278 @@
+[
+  {
+    "id": 1,
+    "user_id": "123",
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Broken Screen",
+    "photos": [
+      "photo1.jpg"
+    ],
+    "status": "Created",
+    "created_at": "2025-07-04T10:10:28.624Z"
+  },
+  {
+    "id": 2,
+    "user_id": "125",
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Broken Screen",
+    "photos": [
+      "photo1.jpg"
+    ],
+    "status": "Created",
+    "created_at": "2025-07-04T10:16:15.292Z"
+  },
+  {
+    "id": 3,
+    "user_id": "127",
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Broken Screen",
+    "photos": [
+      "photo1.jpg"
+    ],
+    "status": "Created",
+    "created_at": "2025-07-04T10:22:52.892Z"
+  },
+  {
+    "id": 4,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone SE",
+    "issue": "Broken Screen",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:24:35.366Z"
+  },
+  {
+    "id": 5,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy S22",
+    "issue": "Camera Issue",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:26:45.651Z"
+  },
+  {
+    "id": 6,
+    "user_id": 1,
+    "brand": "Huawei",
+    "model": "test",
+    "issue": "Water Damage",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:27:35.669Z"
+  },
+  {
+    "id": 7,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 15",
+    "issue": "Won't Turn On",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:28:38.889Z"
+  },
+  {
+    "id": 8,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy S21",
+    "issue": "Broken Screen",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:30:57.303Z"
+  },
+  {
+    "id": 9,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Won't Turn On",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:34:22.185Z"
+  },
+  {
+    "id": 10,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Water Damage",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:36:41.038Z"
+  },
+  {
+    "id": 11,
+    "user_id": 1,
+    "brand": "OnePlus",
+    "model": "test",
+    "issue": "Camera Issue",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:38:42.942Z"
+  },
+  {
+    "id": 12,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Camera Issue",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:39:22.854Z"
+  },
+  {
+    "id": 13,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Camera Issue",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:40:50.204Z"
+  },
+  {
+    "id": 14,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy S22",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:58:39.076Z"
+  },
+  {
+    "id": 15,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Water Damage",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T10:59:14.136Z"
+  },
+  {
+    "id": 16,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy S21",
+    "issue": "Won't Turn On",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:00:22.610Z"
+  },
+  {
+    "id": 17,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone SE",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:01:41.221Z"
+  },
+  {
+    "id": 18,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy Note 20",
+    "issue": "Won't Turn On",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:05:25.185Z"
+  },
+  {
+    "id": 19,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy S21",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:06:25.007Z"
+  },
+  {
+    "id": 20,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 14",
+    "issue": "Camera Issue",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:07:17.938Z"
+  },
+  {
+    "id": 21,
+    "user_id": 1,
+    "brand": "Samsung",
+    "model": "Galaxy S22",
+    "issue": "Won't Turn On",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:09:46.748Z"
+  },
+  {
+    "id": 22,
+    "user_id": 1,
+    "brand": "Huawei",
+    "model": "asda",
+    "issue": "dasdsad",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:10:09.741Z"
+  },
+  {
+    "id": 23,
+    "user_id": 1,
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:12:59.794Z"
+  },
+  {
+    "id": 24,
+    "user_id": "test_user",
+    "brand": "Apple",
+    "model": "iPhone 13",
+    "issue": "Broken Screen",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:13:37.550Z"
+  },
+  {
+    "id": 25,
+    "user_id": "test_user",
+    "brand": "Samsung",
+    "model": "Galaxy S22",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:14:59.615Z"
+  },
+  {
+    "id": 26,
+    "user_id": "test_user",
+    "brand": "Samsung",
+    "model": "Galaxy S22",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:16:29.411Z"
+  },
+  {
+    "id": 27,
+    "user_id": "test_user",
+    "brand": "Apple",
+    "model": "iPhone 14",
+    "issue": "Battery Replacement",
+    "photos": [],
+    "status": "Created",
+    "created_at": "2025-07-04T11:17:28.370Z"
+  }
+]
